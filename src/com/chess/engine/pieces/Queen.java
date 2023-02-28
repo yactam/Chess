@@ -12,10 +12,11 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.chess.engine.board.Move.*;
-public class Rook extends Piece {
 
-    private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
-    Rook(int position, Alliance alliance) {
+public class Queen extends Piece {
+
+    private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9}; // Rook + Bishop
+    Queen(int position, Alliance alliance) {
         super(position, alliance);
     }
 
@@ -52,10 +53,10 @@ public class Rook extends Piece {
     }
 
     private static boolean isFirstColumnExclusion(int currentPosition, int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -1);
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == 7 || candidateOffset == -1);
     }
 
     private static boolean isEightColumnExclusion(int currentPosition, int candidateOffset) {
-        return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset == 1);
+        return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset == 9 || candidateOffset == -7 || candidateOffset == 1);
     }
 }
