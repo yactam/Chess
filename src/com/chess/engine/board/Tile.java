@@ -16,7 +16,7 @@ public abstract class Tile {
         for(int i = 0; i < 64; i++) {
             emptyTileMap.put(i, new EmptyTile(i));
         }
-        return ImmutableMap.copyOf(emptyTileMap);
+        return ImmutableMap.copyOf(emptyTileMap); // return Collections.unmodifiableMap(emptyTileMap);
     }
 
     private Tile(final int tileCoordinate) {
