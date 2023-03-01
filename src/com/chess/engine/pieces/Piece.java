@@ -11,11 +11,21 @@ public abstract class Piece {
     protected final int position;
     protected final Alliance pieceAlliance; // color
     protected final boolean isFirstMove;
+    private final int cachedHashCode;
 
     Piece(final int position, final Alliance alliance) {
         this.pieceAlliance = alliance;
         this.position = position;
         isFirstMove = false;
+        this.cachedHashCode = computeCachedHashCode();
+    }
+
+    private int computeCachedHashCode() {
+        int ret = getPieceType().hashCode();
+        ret = 31 * ret + pieceAlliance.hashCode();
+        ret = 31 * ret + position;
+        ret = 31 * ret + (isFirstMove? 1 : 0);
+        return ret;
     }
 
     public abstract Collection<Move> calculateLegalMoves(final Board board);
@@ -29,6 +39,20 @@ public abstract class Piece {
     }
 
     public abstract PieceType getPieceType();
+    public abstract Piece movePiece(Move move);
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(!(o instanceof Piece piece)) return false;
+        return piece.position == this.position && piece.pieceAlliance == this.pieceAlliance && piece.isFirstMove == piece.isFirstMove
+                && piece.getPieceType() == this.getPieceType();
+     }
+
+    @Override
+    public int hashCode() {
+        return this.cachedHashCode;
+    }
 
     public enum PieceType {
 
@@ -39,7 +63,7 @@ public abstract class Piece {
         QUEEN("Q"),
         KING("K");
 
-        private String pieceName;
+        private final String pieceName;
 
         PieceType(String pieceName) {
             this.pieceName = pieceName;
@@ -49,5 +73,6 @@ public abstract class Piece {
         public String toString() {
             return this.pieceName;
         }
+
     }
 }

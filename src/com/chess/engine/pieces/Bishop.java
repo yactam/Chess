@@ -57,6 +57,11 @@ public class Bishop extends Piece {
         return PieceType.BISHOP;
     }
 
+    @Override
+    public Bishop movePiece(Move move) {
+        return new Bishop(move.getDestinationCoordinate(), move.getMovePiece().pieceAlliance);
+    }
+
     private static boolean isFirstColumnExclusion(int currentPosition, int candidateOffset) {
         return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == 7);
     }

@@ -13,17 +13,17 @@ public class WhitePlayer extends Player {
     }
 
     @Override
-    Collection<Piece> getActivePieces() {
+    public Collection<Piece> getActivePieces() {
         return board.getWhitePieces();
     }
 
     @Override
-    Alliance getAlliance() {
+    public Alliance getAlliance() {
         return Alliance.WHITE;
     }
 
     @Override
-    Player getOpponent() {
+    public Player getOpponent() {
         return this.board.blackPlayer();
     }
 }

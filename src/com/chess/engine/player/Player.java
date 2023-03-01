@@ -84,7 +84,7 @@ public abstract class Player {
         return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
     }
 
-    private Collection<Move> getLegalMoves() {
+    public Collection<Move> getLegalMoves() {
         return legalMoves;
     }
 
@@ -92,8 +92,8 @@ public abstract class Player {
         return king;
     }
 
-    abstract Collection<Piece> getActivePieces();
-    abstract Alliance getAlliance();
-    abstract Player getOpponent();
+    public abstract Collection<Piece> getActivePieces();
+    public abstract Alliance getAlliance();
+    public abstract Player getOpponent();
 
 }
