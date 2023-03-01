@@ -3,6 +3,7 @@ package com.chess.engine.board;
 import com.chess.engine.Alliance;
 import com.chess.engine.pieces.*;
 import com.chess.engine.player.BlackPlayer;
+import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
 
@@ -23,6 +24,7 @@ public class Board {
 
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
+    private final Player currentPlayer;
     private Board(Builder builder) {
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(gameBoard, WHITE);
@@ -33,6 +35,9 @@ public class Board {
 
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
         this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+
+        //TODO
+        currentPlayer = null;
     }
 
     private Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {
@@ -127,6 +132,18 @@ public class Board {
             if((i + 1) % NUM_TILES_PER_ROW == 0) stringBuilder.append('\n');
         }
         return stringBuilder.toString();
+    }
+
+    public Player whitePlayer() {
+        return whitePlayer;
+    }
+
+    public Player blackPlayer() {
+        return blackPlayer;
+    }
+
+    public Player currentPlayer() {
+        return currentPlayer;
     }
 
     public static class Builder {
