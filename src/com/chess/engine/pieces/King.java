@@ -16,7 +16,7 @@ import static com.chess.engine.board.BoardUtils.isValidTileCoordinate;
 public class King extends Piece {
 
     private static final int[] CANDIDATE_MOVE_COORDINATE = {-9, -8, -7, -1, 1, 7, 8, 9};
-    King(int position, Alliance alliance) {
+    public King(int position, Alliance alliance) {
         super(position, alliance);
     }
 
@@ -30,7 +30,7 @@ public class King extends Piece {
             if(isFirstColumnExclusion(this.position, currentCandidateOffset)
                     || isEightColumnExclusion(this.position, currentCandidateOffset)) continue;
 
-            if(BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
+            if(isValidTileCoordinate(candidateDestinationCoordinate)) {
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if(!candidateDestinationTile.isTileOccupied()) {
                     legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
@@ -56,5 +56,15 @@ public class King extends Piece {
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
         return BoardUtils.EIGHT_COLUMN[currentPosition]
                 && (candidateOffset == -7 || candidateOffset == 1 || candidateOffset == 9);
+    }
+
+    @Override
+    public String toString() {
+        return PieceType.KING.toString();
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
     }
 }

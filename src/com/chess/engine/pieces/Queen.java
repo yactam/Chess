@@ -16,7 +16,7 @@ import static com.chess.engine.board.Move.*;
 public class Queen extends Piece {
 
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1, 1, 7, 8, 9}; // Rook + Bishop
-    Queen(int position, Alliance alliance) {
+    public Queen(int position, Alliance alliance) {
         super(position, alliance);
     }
 
@@ -58,5 +58,15 @@ public class Queen extends Piece {
 
     private static boolean isEightColumnExclusion(int currentPosition, int candidateOffset) {
         return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset == 9 || candidateOffset == -7 || candidateOffset == 1);
+    }
+
+    @Override
+    public String toString() {
+        return PieceType.QUEEN.toString();
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
     }
 }

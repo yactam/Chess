@@ -17,7 +17,7 @@ import static com.chess.engine.board.Move.*;
 public class Knight extends Piece {
 
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
-    Knight(final int position, final Alliance alliance) {
+    public Knight(final int position, final Alliance alliance) {
         super(position, alliance);
     }
 
@@ -67,6 +67,16 @@ public class Knight extends Piece {
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset) {
         return BoardUtils.EIGHT_COLUMN[currentPosition]
                 && (candidateOffset == -15 || candidateOffset == -6 || candidateOffset == 10 || candidateOffset == 17);
+    }
+
+    @Override
+    public String toString() {
+        return PieceType.KNIGHT.toString();
+    }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
     }
 
 }
