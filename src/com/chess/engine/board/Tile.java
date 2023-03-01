@@ -6,6 +6,8 @@ import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.chess.engine.Alliance.BLACK;
+
 public abstract class Tile {
 
     protected final int tileCoordinate;
@@ -44,6 +46,11 @@ public abstract class Tile {
         public Piece getPiece() {
             return null;
         }
+
+        @Override
+        public String toString() {
+            return "-";
+        }
     }
 
     public static final class OccupiedTile extends Tile {
@@ -62,6 +69,10 @@ public abstract class Tile {
         @Override
         public Piece getPiece() {
             return piece;
+        }
+        @Override
+        public String toString() {
+            return getPiece().getAlliance().equals(BLACK) ? piece.toString().toLowerCase() : piece.toString().toUpperCase();
         }
     }
 }
