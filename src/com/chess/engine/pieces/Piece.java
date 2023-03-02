@@ -54,6 +54,10 @@ public abstract class Piece {
         return this.cachedHashCode;
     }
 
+    public boolean isFirstMove() {
+        return this.isFirstMove;
+    }
+
     public enum PieceType {
 
         PAWN("P"),
