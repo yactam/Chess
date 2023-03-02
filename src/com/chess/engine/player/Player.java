@@ -22,8 +22,8 @@ public abstract class Player {
     private final boolean isInCheck;
 
     Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves) {
-        this.king = establishKing();
         this.board = board;
+        this.king = establishKing();
         this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves, calculateKingCastles(legalMoves, opponentMoves)));
         this.opponentMoves = opponentMoves;
         this.isInCheck = !Player.calculateAttacksOnTile(this.king.getPosition(), opponentMoves).isEmpty();
