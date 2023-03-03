@@ -8,69 +8,90 @@ import java.util.Collection;
 
 public abstract class Piece {
 
-    protected final int position;
-    protected final Alliance pieceAlliance; // color
-    protected final boolean isFirstMove;
+    final PieceType pieceType;
+    final Alliance pieceAlliance;
+    final int piecePosition;
+    private final boolean isFirstMove;
     private final int cachedHashCode;
 
-    Piece(final int position, final Alliance alliance) {
+    Piece(final PieceType type,
+          final Alliance alliance,
+          final int piecePosition,
+          final boolean isFirstMove) {
+        this.pieceType = type;
+        this.piecePosition = piecePosition;
         this.pieceAlliance = alliance;
-        this.position = position;
-        isFirstMove = false;
-        this.cachedHashCode = computeCachedHashCode();
+        this.isFirstMove = isFirstMove;
+        this.cachedHashCode = computeHashCode();
     }
 
-    private int computeCachedHashCode() {
-        int ret = getPieceType().hashCode();
-        ret = 31 * ret + pieceAlliance.hashCode();
-        ret = 31 * ret + position;
-        ret = 31 * ret + (isFirstMove? 1 : 0);
-        return ret;
+    public PieceType getPieceType() {
+        return this.pieceType;
     }
 
-    public abstract Collection<Move> calculateLegalMoves(final Board board);
-
-    public Integer getPosition() {
-        return position;
+    public Alliance getPieceAllegiance() {
+        return this.pieceAlliance;
     }
 
-    public Alliance getAlliance() {
-        return pieceAlliance;
-    }
-
-    public abstract PieceType getPieceType();
-    public abstract Piece movePiece(Move move);
-
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(!(o instanceof Piece piece)) return false;
-        return piece.position == this.position && piece.pieceAlliance == this.pieceAlliance && piece.isFirstMove == piece.isFirstMove
-                && piece.getPieceType() == this.getPieceType();
-     }
-
-    @Override
-    public int hashCode() {
-        return this.cachedHashCode;
+    public int getPiecePosition() {
+        return this.piecePosition;
     }
 
     public boolean isFirstMove() {
         return this.isFirstMove;
     }
 
+    public int getPieceValue() {
+        return this.pieceType.getPieceValue();
+    }
+
+    public abstract int locationBonus();
+
+    public abstract Piece movePiece(Move move);
+
+    public abstract Collection<Move> calculateLegalMoves(final Board board);
+
+
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof Piece)) {
+            return false;
+        }
+        final Piece otherPiece = (Piece) other;
+        return this.piecePosition == otherPiece.piecePosition && this.pieceType == otherPiece.pieceType &&
+               this.pieceAlliance == otherPiece.pieceAlliance && this.isFirstMove == otherPiece.isFirstMove;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.cachedHashCode;
+    }
+
+    private int computeHashCode() {
+        int result = this.pieceType.hashCode();
+        result = 31 * result + this.pieceAlliance.hashCode();
+        result = 31 * result + this.piecePosition;
+        result = 31 * result + (this.isFirstMove ? 1 : 0);
+        return result;
+    }
+
     public enum PieceType {
 
-        PAWN("P"),
-        KNIGHT("N"),
-        BISHOP("B"),
-        ROOK("R"),
-        QUEEN("Q"),
-        KING("K");
+        PAWN(100, "P"),
+        KNIGHT(300, "N"),
+        BISHOP(330, "B"),
+        ROOK(500, "R"),
+        QUEEN(900, "Q"),
+        KING(10000, "K");
 
+        private final int value;
         private final String pieceName;
 
-        PieceType(String pieceName) {
-            this.pieceName = pieceName;
+        public int getPieceValue() {
+            return this.value;
         }
 
         @Override
@@ -78,5 +99,12 @@ public abstract class Piece {
             return this.pieceName;
         }
 
+        PieceType(final int val,
+                  final String pieceName) {
+            this.value = val;
+            this.pieceName = pieceName;
+        }
+
     }
+
 }

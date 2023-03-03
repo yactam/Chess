@@ -22,7 +22,13 @@ public enum MoveStatus {
         public boolean isDone() {
             return false;
         }
+    },
+    IS_DONE {
+        @Override
+        public boolean isDone() {
+            return true;
+        }
     };
 
-    abstract boolean isDone();
+    public abstract boolean isDone();
 }

@@ -76,7 +76,7 @@ public abstract class Tile {
         }
         @Override
         public String toString() {
-            return getPiece().getAlliance().equals(BLACK) ? piece.toString().toLowerCase() : piece.toString().toUpperCase();
+            return getPiece().getPieceAllegiance().equals(BLACK) ? piece.toString().toLowerCase() : piece.toString().toUpperCase();
         }
     }
 }
